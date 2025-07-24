@@ -3,8 +3,8 @@ import pandas as pd
 from Bio import SeqIO
 
 # Directories
-input_dir = "hypermut_filtered/"
-fasta_dir = "nnk_count/fasta_stratified_by_count/"
+input_dir = "5_nnk_count/"
+fasta_dir = "5_nnk_count/fasta_stratified_by_count/"
 output_file = os.path.join(fasta_dir, "num_of_nnk_breakdown.xlsx")
 
 # Results list
@@ -12,9 +12,9 @@ results = []
 
 # Process each *_hypermut.fasta file
 for filename in os.listdir(input_dir):
-    if filename.endswith("_hypermut.fasta"):
+    if filename.endswith(".xlsx"):
         
-        library = filename.replace(".fasta", "")
+        library = filename.replace(".xlsx", "")
 
         # Paths to stratified FASTA files
         file_0 = os.path.join(fasta_dir, f"{library}_0_nnk.fasta")

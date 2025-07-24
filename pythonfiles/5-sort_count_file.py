@@ -22,7 +22,7 @@ def extract_label(motif):
         if match:
             number = float(match.group(1))
             return f"B2M {letter}{int(number) + 42}"
-    return "Unknown"
+    return motif
 
 def extract_sort_key(motif):
     # Match new format: oPool followed by an integer and a float

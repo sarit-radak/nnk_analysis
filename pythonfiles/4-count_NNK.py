@@ -158,33 +158,19 @@ if not((len(sys.argv) !=2) or (len(sys.argv) !=3)):
     sys.exit(1)
 
 
-fasta_file = sys.argv[1]
-
-if len(sys.argv) == 2: # motif file not specified
-    if "A3" in fasta_file:
-        motif_file = "id_motifs/A3_motifs.xlsx"
-    elif "B2M" in fasta_file:
-        motif_file = "id_motifs/B2M_motifs.xlsx"
-    elif "A4" in fasta_file:
-        motif_file = "id_motifs/A4_motifs.xlsx"
-    else:
-        print(f"Unknown library type in {fasta_file}. Please specify a motif file.")
-        sys.exit(1)
-
-    output_excel_path = fasta_file.replace("hypermut_filtered/", "nnk_count/")
-    output_excel_path = output_excel_path.replace(".fasta", ".xlsx")
-    output_excel_path = output_excel_path.replace("_hypermut", "")
-
-
-else: # motif file specified
-    motif_file = sys.argv[2]
-    output_excel_path = fasta_file.replace("hypermut_filtered/", "nnk_count/")
-    output_excel_path = output_excel_path.replace(".fasta", f"_vs_{motif_file.replace("xlsx","").replace("id_motifs/","")}.xlsx")
+motif_file = sys.argv[1]
+fasta_file = sys.argv[2]
+library_name = os.path.splitext(os.path.basename(fasta_file))[0]
 
 
 motifs = load_motifs(motif_file)
-output_prefix = fasta_file.replace("hypermut_filtered/", "nnk_count/fasta_stratified_by_count/").replace(".fasta", "")
+
+# specify the name of the count file
+output_excel_path = fasta_file.replace("3_len_filtered", "5_nnk_count").replace("fasta", "xlsx")#.replace(".fasta", f"_vs_{motif_file.replace(".xlsx","").replace("4_id_motifs/","")}.xlsx")
+
+# specify where the fasta files will be saved
+output_prefix = fasta_file.replace("3_len_filtered", "5_nnk_count/fasta_stratified_by_count").replace(".fasta", "").replace("_L001_paired", "")
 motif_counts = count_motifs_in_fasta(fasta_file, motifs, output_prefix)
 save_counts_to_excel(motif_counts, motifs, output_excel_path)
 
-print("Motif counting complete. Results saved to:", output_excel_path)
+print(f'{library_name}')

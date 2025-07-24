@@ -7,8 +7,7 @@ input_file = sys.argv[1]
 
 # Output file path
 base, ext = os.path.splitext(input_file)
-base = base.replace("nnk_count", "nnk_freq")
-#base = base.replace ("_hypermut", "")
+base = base.replace("5_nnk_count", "6_nnk_freq")
 output_file = f"{base}{ext}"
 
 # Read Excel sheet
@@ -32,4 +31,4 @@ freq_df[aa_columns] = df.apply(calculate_frequencies, axis=1)
 # Save the result to a new Excel file
 freq_df.to_excel(output_file, index=False)
 
-print(f"Converted {input_file} to {output_file}")
+print(f"Calculated frequencies for {os.path.splitext(os.path.basename(input_file))[0]}")
