@@ -63,4 +63,4 @@ main_dir=/gpfs/home/sradak/nnk_analysis
 #}
 #export -f filter
 
-#find 2_paired/fasta -type f -name '*.fasta' | parallel -j 16 filter
+#find 2_paired/fasta -type f -maxdepth 1 -name '*.fasta' | parallel -j 16 filter
