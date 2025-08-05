@@ -14,9 +14,7 @@ module load seqtk/1.4
 BBMERGE='bbmap/bbmerge.sh'
 
 
-main_dir=/gpfs/home/sradak/nnk_test
-mkdir -p $main_dir/2_paired
-mkdir -p $main_dir/2_paired/fasta
+main_dir=/gpfs/home/sradak/nnk_analysis
 
 
 # unzip files

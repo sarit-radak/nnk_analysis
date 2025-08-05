@@ -13,11 +13,11 @@ module load bcl2fastq/2.19.1.403
 #For code set up, make sure all data files are in L001 AND RunInfo.xml is also in L001
 
 # NextSeq data directory; sub-directories Autocenter, autofocus, etc
-RUNFOLDER_DIR="/gpfs/home/sradak/nnk_test/250714_VH00464_562_AAH53NTM5"
+RUNFOLDER_DIR="/gpfs/home/sradak/nnk_analysis/250714_VH00464_562_AAH53NTM5"
 # Directory where the output files will go
-OUTPUT_DIR="/gpfs/home/sradak/nnk_test/1_raw_fastq"
+OUTPUT_DIR="/gpfs/home/sradak/nnk_analysis/1_raw_fastq"
 # Spreadsheet that specifies the sample barcodes
-SAMPLE_SHEET="/gpfs/home/sradak/nnk_test/barcodes.csv"
+SAMPLE_SHEET="/gpfs/home/sradak/nnk_analysis/barcodes.csv"
 
 # Run bcl2fastq with proper paths
 bcl2fastq --runfolder-dir "$RUNFOLDER_DIR" --output-dir "$OUTPUT_DIR" --sample-sheet "$SAMPLE_SHEET"

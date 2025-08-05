@@ -3,9 +3,9 @@ import pandas as pd
 from Bio import SeqIO
 
 # Directories
-input_dir = "5_nnk_count/"
-fasta_dir = "5_nnk_count/fasta_stratified_by_count/"
-output_file = os.path.join(fasta_dir, "num_of_nnk_breakdown.xlsx")
+input_dir = "4_nnk_count/"
+fasta_dir = "4_nnk_count/fasta_stratified_by_count/"
+output_file = os.path.join(fasta_dir, "nnk_per_read_breakdown.xlsx")
 
 # Results list
 results = []
@@ -27,7 +27,6 @@ for filename in os.listdir(input_dir):
         count_multi = len(list(SeqIO.parse(file_multi, "fasta"))) if os.path.exists(file_multi) else 0
 
         total = count_0 + count_1 + count_multi
-        print (total)
 
         if total == 0:
             percent_0 = percent_1 = percent_multi = 0.0

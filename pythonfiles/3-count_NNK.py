@@ -19,9 +19,9 @@ def degenerate_to_regex(seq):
 def load_motifs(motif_file):
     """Load motifs from the Excel file, replacing NNK with a regex pattern."""
     df = pd.read_excel(motif_file)
-    motifs = df[["Sequence Name", "NNK Context"]].dropna()
+    motifs = df[["Oligo", "NNK Motif"]].dropna()
     motif_patterns = {
-    row["Sequence Name"]: degenerate_to_regex(row["NNK Context"])
+    row["Oligo"]: degenerate_to_regex(row["NNK Motif"])
     for _, row in motifs.iterrows()
 }
     return motif_patterns
@@ -123,7 +123,9 @@ def save_counts_to_excel(motif_aa_counts, motif_patterns, output_file):
 
     rows = []
     for motif, aa_counts in motif_aa_counts.items():
-        row = {"Motif": motif, "Sequence": bracket_to_iupac(motif_patterns[motif])}
+        parts = motif.split('_')
+        label = parts[1] + " " + parts[3] # protein + wt residue + residue number
+        row = {"Position": label}
         total = 0
         aa_counts = motif_aa_counts.get(motif, {})  # Default to empty if motif is not found
 
@@ -133,11 +135,13 @@ def save_counts_to_excel(motif_aa_counts, motif_patterns, output_file):
             total += count
         row["Total"] = total
         rows.append(row)
-        # Add rows for motifs not found
-
+        
+    # Add rows for motifs not found
     for motif in motif_patterns.keys():
         if motif not in motif_aa_counts:
-            row = {"Motif": motif, "Sequence": bracket_to_iupac(motif_patterns[motif])}
+            parts = motif.split('_')
+            label = parts[1] + " " + parts[3] # protein + wt residue + residue number
+            row = {"Position": label}
             for aa in all_aas:
                 row[aa] = 0
             row["Total"] = 0
@@ -149,8 +153,27 @@ def save_counts_to_excel(motif_aa_counts, motif_patterns, output_file):
             if aa not in row:
                 row[aa] = 0
 
+
     df = pd.DataFrame(rows)
-    df.to_excel(output_file, index=False)
+
+    # sort by amino acid number
+    df["__sort_key__"] = df["Position"].astype(str).str.extract(r'(\d+)$').astype(int)
+    df = df.sort_values("__sort_key__")
+    df = df.drop(columns="__sort_key__")            
+
+    # sort mu alphabetically
+    columns = df.columns.tolist()
+    position = ["Position"]
+    stop = ['*']
+    total = ['Total']
+    aa_columns = sorted([col for col in columns if col not in position + stop + total])
+    new_column_order = position + stop + aa_columns + total
+    df = df[new_column_order]
+    
+    df_t = df.set_index("Position").T
+
+
+    df_t.to_excel(output_file, index=True)
 
 
 if not((len(sys.argv) !=2) or (len(sys.argv) !=3)):
@@ -166,11 +189,11 @@ library_name = os.path.splitext(os.path.basename(fasta_file))[0]
 motifs = load_motifs(motif_file)
 
 # specify the name of the count file
-output_excel_path = fasta_file.replace("3_len_filtered", "5_nnk_count").replace("fasta", "xlsx")#.replace(".fasta", f"_vs_{motif_file.replace(".xlsx","").replace("4_id_motifs/","")}.xlsx")
+output_excel_path = fasta_file.replace("3_len_filtered", "4_nnk_count").replace("fasta", "xlsx")#.replace(".fasta", f"_vs_{motif_file.replace(".xlsx","").replace("4_id_motifs/","")}.xlsx")
 
 # specify where the fasta files will be saved
-output_prefix = fasta_file.replace("3_len_filtered", "5_nnk_count/fasta_stratified_by_count").replace(".fasta", "").replace("_L001_paired", "")
+output_prefix = fasta_file.replace("3_len_filtered", "4_nnk_count/fasta_stratified_by_count").replace(".fasta", "").replace("_L001_paired", "")
 motif_counts = count_motifs_in_fasta(fasta_file, motifs, output_prefix)
 save_counts_to_excel(motif_counts, motifs, output_excel_path)
 
-print(f'{library_name}')
+print(f'{library_name} nnk counted')
