@@ -1,7 +1,7 @@
 [Header],,,,
 IEMFileVersion,4,,,
 Investigator Name,Jardine,,,
-Experiment Name,25-05-30 SR RM,,,
+Experiment Name,Experiment_Name,,,
 Date,6/2/25,,,
 Workflow,GenerateFASTQ,,,
 Application,FASTQ Only,,,
@@ -18,21 +18,21 @@ ReverseComplement,0,,,
 ,,,,
 [Data],,,i7,Reverse compliment of i5
 Sample_ID,Sample_Name,Sample_Project,index,index2
-1,A3_N_a,Project,GTTCTCGT,TGTTCCGT
-2,A3_S1_Disp_e,Project,TCAGGCTT,ATCATGCG
-3,A3_S1_Disp_f,Project,CCTTGTAG,CCTTGGAA
-4,A3_Pair_S1_a,Project,GAACATCG,TCGACAAG
-5,A3_Pair_S2_a,Project,TAACCGGT,ATCGTCTC
-6,A3_TCR_S1_a,Project,AACCGTTC,CTAGCTCA
-7,A3_TCR_S2_a,Project,TGGTACAG,TCGAGAGT
-8,A3_TCR_S3_mOT-1_a,Project,ATATGCGC,ACGATCAG
-9,A3_TCR_S3_tOT-1_a,Project,CTGATCGT,GCGCATAT
-10,A3_N_b,Project,ACTCTCGA,CTGTACCA
-11,A3_S1_Disp_g,Project,TGAGCTAG,GAACGGTT
-12,A3_S1_Disp_h,Project,GAGACGAT,ACCGGTTA
-13,A3_Pair_S1_b,Project,CTTGTCGA,CGATGTTC
-14,A3_Pair_S2_b,Project,TTCCAAGG,CTACAAGG
-15,A3_TCR_S1_b,Project,CGCATGAT,AAGCCTGA
-16,A3_TCR_S2_b,Project,ACGGAACA,ACGAGAAC
-17,A3_TCR_S3_mOT-1_b,Project,CGGCTAAT,CTCGTTCT
-18,A3_TCR_S3_tOT-1_b,Project,ATCGATCG,TGGAAGCA
+1,Sample_1,Project,GTTCTCGT,TGTTCCGT
+2,Sample_2,Project,TCAGGCTT,ATCATGCG
+3,Sample_3,Project,CCTTGTAG,CCTTGGAA
+4,Sample_4,Project,GAACATCG,TCGACAAG
+5,Sample_5,Project,TAACCGGT,ATCGTCTC
+6,Sample_6,Project,AACCGTTC,CTAGCTCA
+7,Sample_7,Project,TGGTACAG,TCGAGAGT
+8,Sample_8,Project,ATATGCGC,ACGATCAG
+9,Sample_9,Project,CTGATCGT,GCGCATAT
+10,Sample_10,Project,ACTCTCGA,CTGTACCA
+11,Sample_11,Project,TGAGCTAG,GAACGGTT
+12,Sample_12,Project,GAGACGAT,ACCGGTTA
+13,Sample_13,Project,CTTGTCGA,CGATGTTC
+14,Sample_14,Project,TTCCAAGG,CTACAAGG
+15,Sample_15,Project,CGCATGAT,AAGCCTGA
+16,Sample_16,Project,ACGGAACA,ACGAGAAC
+17,Sample_17,Project,CGGCTAAT,CTCGTTCT
+18,Sample_18,Project,ATCGATCG,TGGAAGCA

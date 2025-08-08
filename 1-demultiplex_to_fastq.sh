@@ -7,8 +7,11 @@
 #SBATCH --output=logs/demux.%J.out
 #SBATCH --error=logs/demux.%J.err
 
+exec > logs/count_nnk.log 2>&1
+
 module purge
 module load bcl2fastq/2.19.1.403
+mkdir -p 1_raw_fastq
 
 #For code set up, make sure all data files are in L001 AND RunInfo.xml is also in L001
 

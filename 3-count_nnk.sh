@@ -9,6 +9,8 @@
 
 exec > logs/count_nnk.log 2>&1
 
+mkdir -p 4_id_motifs
+
 # Function to count NNKs
 run_count() {
     fasta="$1"
@@ -18,9 +20,9 @@ run_count() {
 export -f run_count
 
 # count NNKs in test set
-#python3 -u pythonfiles/4-count_NNK.py 4_id_motifs/A3_oPool_NNK_motifs.xlsx 3_len_filtered/nnk_motif_test_set.fasta
+#python3 -u pythonfiles/3-count_NNK.py 4_id_motifs/A3_oPool_NNK_motifs.xlsx 3_len_filtered/nnk_motif_test_set.fasta
 
-# count NNKs in all reads
+# count NNKs
 #find 3_len_filtered -type f -name '*.fasta' | parallel -j 16 run_count
 
 # count the number of sequences with 0, 1, and multiple motifs

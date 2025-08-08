@@ -7,13 +7,20 @@
 #SBATCH --output=logs/pair.out
 #SBATCH --error=logs/pair.err
 
+exec > logs/count_nnk.log 2>&1
+
 module purge
 module load fastqc
 module load python/3.8.3
 module load seqtk/1.4
+mkdir -p 2_paired/fastq/
+mkdir -p 2_paired/hist/
+mkdir -p 2_paired/fasta/
+mkdir -p 2_paired/fasta/first_1000/
+mkdir -p 2_paired/unmerged/
+mkdir -p 3_len_filtered
+
 BBMERGE='bbmap/bbmerge.sh'
-
-
 main_dir=/gpfs/home/sradak/nnk_analysis
 
 

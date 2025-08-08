@@ -3,8 +3,6 @@ import os
 from Bio import SeqIO
 
 def filter_fasta(input_file, length_cutoff, output_dir):
-    os.makedirs(output_dir, exist_ok=True)
-
     basename = os.path.basename(input_file)
     output_path = os.path.join(output_dir, basename)
 
