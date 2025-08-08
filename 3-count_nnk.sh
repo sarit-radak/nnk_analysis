@@ -20,7 +20,7 @@ run_count() {
 export -f run_count
 
 # count NNKs in test set
-#python3 -u pythonfiles/3-count_NNK.py 4_id_motifs/A3_oPool_NNK_motifs.xlsx 3_len_filtered/nnk_motif_test_set.fasta
+#python3 -u pythonfiles/3-count_NNK.py 4_id_motifs/L6_FLAG_motifs.xlsx 3_len_filtered/nnk_motif_test_set.fasta
 
 # count NNKs
 #find 3_len_filtered -type f -name '*.fasta' | parallel -j 16 run_count
