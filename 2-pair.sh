@@ -19,6 +19,7 @@ mkdir -p 2_paired/fasta/
 mkdir -p 2_paired/fasta/first_1000/
 mkdir -p 2_paired/unmerged/
 mkdir -p 3_len_filtered
+mkdir -p logs
 
 BBMERGE='bbmap/bbmerge.sh'
 main_dir=/gpfs/home/sradak/nnk_analysis

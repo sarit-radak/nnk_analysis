@@ -10,6 +10,7 @@
 exec > logs/count_nnk.log 2>&1
 
 mkdir -p 4_id_motifs
+mkdir -p logs
 
 # Function to count NNKs
 run_count() {
