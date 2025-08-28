@@ -33,7 +33,7 @@ main_dir=/gpfs/home/sradak/25-08-20_L4.1_B2M_Analysis
 
 #    dir=$(dirname "$r1_file")
 #    base=$(basename "$r1_file")
-#    sample_name=$(echo "$base" | sed 's/_R1_001.fastq//')
+#    sample_name=$(echo "$base" | sed -E 's/_S[0-9]+_L001_R1_001\.fastq//')
 #    r2_file="${dir}/${sample_name}_R2_001.fastq"
     
 #    out_merge="$main_dir/2_paired/fastq/${sample_name}_paired.fastq"
