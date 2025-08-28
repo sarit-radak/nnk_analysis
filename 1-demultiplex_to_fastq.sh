@@ -36,17 +36,4 @@ SAMPLE_SHEET="barcodes.csv"
 #done
 
 # count reads in each library
-#cd 1_raw_fastq/project
-#find . -type f -name "*_R1_001.fastq" | while read -r file; do
-    # Get the base filename
-#    filename=$(basename "$file")
-    
-    # Extract the library name (everything before _R1_001.fastq)
-#    libname="${filename%_R1_001.fastq}"
-
-    # Count number of sequences (each sequence starts with @ in FASTQ format)
-#    count=$(grep -c '^@' "$file")
-
-    # Print result
-#    echo -e "${libname}\t${count}"
-#done
+#python3 pythonfiles/0-count_reads.py -demultiplex
