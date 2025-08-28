@@ -7,15 +7,16 @@
 #SBATCH --output=logs/count_nnk.out
 #SBATCH --error=logs/count_nnk.err
 
-exec > logs/count_nnk.log 2>&1
-
 mkdir -p 4_nnk_count
+mkdir -p 4_nnk_count/fasta_stratified_by_count
 mkdir -p logs
+
+exec > logs/count_nnk.log 2>&1
 
 # Function to count NNKs
 run_count() {
     fasta="$1"
-    motifs="L6_FLAG_motifs.xlsx"
+    motifs="L4_B2M_motifs.xlsx"
     python3 -u pythonfiles/3-count_NNK.py "$motifs" "$fasta"
 }
 export -f run_count
