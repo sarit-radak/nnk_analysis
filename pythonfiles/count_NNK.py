@@ -1,4 +1,6 @@
 from collections import defaultdict
+
+from numpy import lib
 from Bio.Seq import Seq
 from Bio import SeqIO
 import pandas as pd
@@ -66,8 +68,46 @@ def bracket_to_iupac(seq):
             i += 1
     return output
 
-def count_motifs_in_fasta(fasta_file, motifs, out_prefix):
+def get_matches (seq):
+    seq_rc = str(Seq(seq).reverse_complement())
+
+
+    # find motifs in read
+    matched_motifs = []
+    motif_matches = {}
+    for motif, pattern in motifs.items():
+        match = re.search(pattern, seq)
+        if match:
+            matched_motifs.append([motif, pattern])
+            motif_matches[motif] = match
+    
+    # find motifs in reverse complement of read
+    matched_motifs_rc = []
+    motif_matches_rc = {}
+    for motif, pattern in motifs.items():
+        match = re.search(pattern, seq_rc)
+        if match:
+            matched_motifs_rc.append([motif, pattern])
+            motif_matches_rc[motif] = match
+    
+    print (len(matched_motifs), len(matched_motifs_rc))
+
+    if (len(matched_motifs) == 1) & (len(matched_motifs_rc) != 1): # one match in read, not one match in reverse complement
+        return matched_motifs, motif_matches
+    
+    elif (len(matched_motifs) != 1) & (len(matched_motifs_rc) == 1): # not one match in read, one match in reverse complement
+        return matched_motifs_rc, motif_matches_rc
+    
+    elif (len(matched_motifs) == 0) & (len(matched_motifs_rc) == 0): # no motifs in forward or reverse complement
+        return matched_motifs, motif_matches
+
+    else:
+        return [0,0,0], [0,0,0] # lists long enough to handle the sequence as containing multiple motifs
+
+def count_motifs_in_fasta(library, motifs, out_prefix):
     """Iterate through FASTA, find motifs, and count amino acids translated from the middle codon."""
+    
+    fasta_file = f"libraries/{library}/{library}_len_pass.fasta"
 
     motif_aa_counts = defaultdict(lambda: defaultdict(int))
     zero_motif_seqs = []
@@ -77,15 +117,7 @@ def count_motifs_in_fasta(fasta_file, motifs, out_prefix):
     for record in SeqIO.parse(fasta_file, "fasta"):
         seq = str(record.seq).upper()
         
-        matched_motifs = []
-        motif_matches = {}
-
-        # First: find which motifs match
-        for motif, pattern in motifs.items():
-            match = re.search(pattern, seq)
-            if match:
-                matched_motifs.append([motif, pattern])
-                motif_matches[motif] = match
+        matched_motifs, motif_matches = get_matches (seq)
         
         # Proceed only if exactly one motif matches
         if len(matched_motifs) == 0:
@@ -176,24 +208,26 @@ def save_counts_to_excel(motif_aa_counts, motif_patterns, output_file):
     df_t.to_excel(output_file, index=True)
 
 
-if not((len(sys.argv) !=2) or (len(sys.argv) !=3)):
-    print("Usage: python3 -u count_nnk.py motif_file (optional)")
-    sys.exit(1)
+library = sys.argv[1]
 
 
-motif_file = sys.argv[1]
-fasta_file = sys.argv[2]
-library_name = os.path.splitext(os.path.basename(fasta_file))[0]
+if "A3" in library:
+    motif_file = "L4_A3_motifs.xlsx"
+elif "B2M" in library:
+    motif_file = "L4_B2M_motifs.xlsx"
+else:
+    print ("name ambiguous, using B2M motifs")
+    motif_file = "L4_B2M_motifs.xlsx"
 
 
 motifs = load_motifs(motif_file)
 
 # specify the name of the count file
-output_excel_path = fasta_file.replace("3_len_filtered", "4_nnk_count").replace("fasta", "xlsx")#.replace(".fasta", f"_vs_{motif_file.replace(".xlsx","").replace("4_id_motifs/","")}.xlsx")
+output_excel_path = f"libraries/{library}/{library}.xlsx"
 
 # specify where the fasta files will be saved
-output_prefix = fasta_file.replace("3_len_filtered", "4_nnk_count/fasta_stratified_by_count").replace(".fasta", "").replace("_L001_paired", "")
-motif_counts = count_motifs_in_fasta(fasta_file, motifs, output_prefix)
+output_prefix = f"libraries/{library}/{library}"
+motif_counts = count_motifs_in_fasta(library, motifs, output_prefix)
 save_counts_to_excel(motif_counts, motifs, output_excel_path)
 
-print(f'{library_name} nnk counted')
+print(f'{library} nnk counted')
