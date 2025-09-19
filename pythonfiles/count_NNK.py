@@ -90,8 +90,6 @@ def get_matches (seq):
             matched_motifs_rc.append([motif, pattern])
             motif_matches_rc[motif] = match
     
-    print (len(matched_motifs), len(matched_motifs_rc))
-
     if (len(matched_motifs) == 1) & (len(matched_motifs_rc) != 1): # one match in read, not one match in reverse complement
         return matched_motifs, motif_matches
     
